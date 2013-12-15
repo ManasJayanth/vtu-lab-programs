@@ -17,16 +17,19 @@ int main(){
         scanf("%d", &neighb);
         printf("Size = %d\n");
         printf("No. of neighbours = %d\n Router = %d", size, neighb, router);
-        
-        //Initialise the matrix - all distances are set to infinity
-        for(i = 1; i <= size; i++){
-            mat[router][i] = 999;
-            via[i] = 0;
-        }
 
+        /********* Initialisation ***********/
+        for(i = 1; i <= size; i++){
+            mat[router][i] = 999; // Initialise mat[][] to infinity
+            via[i] = 0; 
+            /* Initialise via - no intermediate node b/w router and 
+               other nodes, hence all via[] initialised to 0 */
+        }
         //Distance of from a router to itself is zero
         mat[router][router] = 0;
 
+
+        /********* Receiving updates ********/
         k = 1;  // To index update. Update from kth neighbour
 
         printf("\nEnter available table entries of neighbours:\n");
@@ -50,7 +53,7 @@ int main(){
         }
         k--;
 
-        //Optimise distance matrix
+        /******* Optimise distance matrix *********/
         for(i = 1; i <= size; i++){
             for(j = 1; j <= k; j++)
                 if((mat[router][i]) > (mat[router][update[j]] + mat[update[j]][i])){
@@ -73,6 +76,8 @@ int main(){
         }
 
         k = 1;
+
+        /***** Take a router down and see the changes in the tables *****/
         printf("\nRouter UP/DOWN 1/0 ? : ");
         scanf("%d", &choice);
         if(choice == 0){
@@ -85,11 +90,16 @@ int main(){
                 if(via[l] == dwn)
                     mat[router][l] = 999;
         }
+
+
+        /**** Display ****/
         printf("Table for %d",router);
         //Displaying node and the distance from the node
         for(i = 1; i <= size; i++)
             printf("\n%d | %d", i, mat[router][i]);
         printf("\n");
+
+        /*** Repeat again ***/
         printf("\nTake values for next exchange 1/0 ?");
         scanf("%d", &ans);
 
