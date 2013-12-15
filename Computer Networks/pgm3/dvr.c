@@ -3,7 +3,7 @@
 int size;
 
 int main(){
-    int l, k, neighb, update[10], router, ans = 1, j, i, dwn, choice, via[10];
+    int neighb, update[10], router, ans = 1, j, i, dwn, choice, via[10];
     int mat[10][10];
 
     while(ans){ //As long as the users answer is yes
@@ -15,8 +15,8 @@ int main(){
         scanf("%d", &router);
         printf("Enter the number of  neighbour nodes: ");
         scanf("%d", &neighb);
-        printf("Size = %d\n");
-        printf("No. of neighbours = %d\n Router = %d", size, neighb, router);
+        printf("Size = %d\n", size);
+        printf("No. of neighbours = %d\n Router = %d", neighb, router);
 
         /********* Initialisation ***********/
         for(i = 1; i <= size; i++){
@@ -30,32 +30,28 @@ int main(){
 
 
         /********* Receiving updates ********/
-        k = 1;  // To index update. Update from kth neighbour
-
         printf("\nEnter available table entries of neighbours:\n");
         //For each neighbour
         for(i = 1; i <= neighb; i++){
             // Identifying router providing the update using update[]
-            printf("Enter node neighbour no %d:  ",k);
-            scanf("%d", &update[k]);
+            printf("Enter node neighbour no %d:  ", i);
+            scanf("%d", &update[i]);
 
             //Update matrix
-            printf("Enter table values for node %d ", update[k]);
+            printf("Enter table values for node %d ", update[i]);
             for(j = 1; j <= size; j++){
                 printf("\n%d | ", j);
-                scanf("%d", &mat[update[k]][j]);
+                scanf("%d", &mat[update[i]][j]);
             }
 
             //Enter distance from router to update[k]
-            printf("Enter weight for %d (router) to %d (node neighbour) ->  ", router, update[k]);
-            scanf("%d", &mat[router][update[k]]);
-            k++;
+            printf("Enter weight for %d (router) to %d (node neighbour) ->  ", router, update[i]);
+            scanf("%d", &mat[router][update[i]]);
         }
-        k--;
 
         /******* Optimise distance matrix *********/
         for(i = 1; i <= size; i++){
-            for(j = 1; j <= k; j++)
+            for(j = 1; j <= neighb; j++)
                 if((mat[router][i]) > (mat[router][update[j]] + mat[update[j]][i])){
                     mat[router][i] = mat[router][update[j]] + mat[update[j]][i];
                     via[i] = update[j];
@@ -75,8 +71,6 @@ int main(){
                 printf("%d", via[i]);
         }
 
-        k = 1;
-
         /***** Take a router down and see the changes in the tables *****/
         printf("\nRouter UP/DOWN 1/0 ? : ");
         scanf("%d", &choice);
@@ -86,9 +80,9 @@ int main(){
             scanf("%d", &dwn);
 
             //Scans for dwn in via matrix and 
-            for(l = 1; l <= size; l++)
-                if(via[l] == dwn)
-                    mat[router][l] = 999;
+            for(i = 1; i <= size; i++)
+                if(via[i] == dwn)
+                    mat[router][i] = 999;
         }
 
 
