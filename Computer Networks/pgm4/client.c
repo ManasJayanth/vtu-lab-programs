@@ -52,7 +52,7 @@ int main(int argc,char *argv[])
     printf("The contents of file are...\n\n");
     
     // Receive the data in buffer as long as server sends data
-    while((count = recv(server, buffer, bufsize, 0))>0) {
+    while((count = recv(server, buffer, bufsize, 0)) > 0) {
         // Write the buffer data to the screen immediately
         write(1, buffer, count); 
         //printf will not work here as the buffer is not a C string
