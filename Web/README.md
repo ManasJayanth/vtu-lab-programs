@@ -1,6 +1,6 @@
 ## Running Perl programs
 
-3## On Ubuntu Linux (with Apache installed)
+### On Ubuntu Linux (with Apache installed)
 
 Place all the perl script files in the folder meant for CGI scripts as mentioned in the configuration file in `/etc/apache2/sites-available/default`. Mostly this will be /usr/lib/cgi-bin by default. Follow this [link](http://prometheansacrifice.wordpress.com/2013/12/07/running-perl-cgi-scripts/) for more details.
 
